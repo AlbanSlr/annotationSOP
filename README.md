@@ -88,7 +88,7 @@ of the most used tools when annotating images:
       <img src="./content/napari-controls.png" width="400">
    </td>
    <td style="border: none; vertical-align: top;">
-   <ol>
+   <ol style="margin-top: 0; padding-top: 0;">
       <li>Label eraser: A brush to remove all IDs from the current image.</li>
       <li>Paint brush: A brush to paint the selected ID on the current image.</li>
       <li>Fill bucket: Replaces the clicked ID and all adjacent pixels with the selected ID.</li>
@@ -99,6 +99,7 @@ of the most used tools when annotating images:
    </td>
 </tr>
 </table>
+
 ### Navigation between frames
 
 You can use the frame slider at the bottom of the GUI to navigate between frames and get pointer related informations.
@@ -110,6 +111,7 @@ You can use the frame slider at the bottom of the GUI to navigate between frames
 **1 - Frame slider**: Allows navigation between different images in the series. You can also click the arrows or use the left and right arrows on your keyboard.
 
 **2 - Pointer information**: Shows your pointer coordinates in the format [Frame Height Width] (height and width in pixels). The last digit (outside of the brackets) corresponds to the label you are currently pointing at (if none, the mask is not selected in the layer list).
+
 ### Creating Ground Truth Masks
 
 We will focus on a specific case of 3 adjacent cells to understand how to properly create the ground truth mask.
@@ -118,6 +120,7 @@ We will focus on a specific case of 3 adjacent cells to understand how to proper
    <img src="./content/3cells.png" width="600">
    <p><em>Zoomed image - last frame</em></p>
 </div>
+
 #### Step 1: Determine the actual number of cells
 
 The first step is to identify whether there are actually 3 cells, or if the model made an error. To do this, we start by hiding the mask layer. We use the frame slider to go back to the appearance of these cells.
@@ -141,6 +144,7 @@ We can therefore be certain that two cells exist starting from frame 80. Similar
    <img src="./content/cell3-born.gif" width="600">
    <p><em>Cell 3 appearance - starting from frame 163</em></p>
 </div>
+
 #### Step 2: Identifying model errors and corrections
 
 **Common model inconsistencies include:**
@@ -159,6 +163,7 @@ We can therefore be certain that two cells exist starting from frame 80. Similar
    <p><em>Multiple errors in a few frames</em></p>
 </div>
 In this example, the base prediction has many ID changes, loses cell tracking, and sometimes merges cells 1 and 2.
+
 #### Step 3: Preliminary correction workflow
 
 It is essential to perform preliminary work to assign a unique ID to each cell throughout the time series.
