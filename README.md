@@ -134,7 +134,7 @@ The first step is to identify whether there are actually 3 cells, or if the mode
 
 We can clearly observe that a second cell appears, attached to the first but distinct. Such spontaneous appearance can indicate this. Additionally, when cell 2 appears, we can see protrusions forming around the new cell. These are called **filopodia**. 🦠
 
-> **Important note:** Filopodia point toward the center of the cell.
+> **Important note:** Filopodia point toward the center of the cell. 🎯
 
 We can therefore be certain that two cells exist starting from frame 80. Similarly, we can see in the following animation the appearance of the 3rd cell.
 
