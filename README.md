@@ -2,30 +2,29 @@
 
 To annotate images, we will use **Napari**, an interactive viewer for multi-dimensional images in Python. Follow the steps below to install Napari locally.
 
-1. **Install Anaconda** 📦
+1. **Install Anaconda** 📦  
    Download and install the [Anaconda distribution](https://www.anaconda.com/download).
 
-2. **Restart your computer** 🔄
+2. **Restart your computer** 🔄  
    This ensures Anaconda is properly installed and recognized by your system.
 
-3. **Create a new Conda environment** 🐍
+3. **Create a new Conda environment** 🐍  
    Open a new terminal and run:
 ```bash
 conda create -n annotation python=3.11
 ```
 
-4. **Activate the environment** ⚡
+4. **Activate the environment** ⚡  
 ```bash
 conda activate annotation
 ```
 
-5. **Install Napari and dependencies** 📸
+5. **Install Napari and dependencies** 📸  
 ```bash
 conda install -c conda-forge napari pyqt
 ```
 
-6. **Verify the installation** ✅
-
+6. **Verify the installation** ✅  
 ```bash
 napari --version
 ```
