@@ -89,16 +89,18 @@ of the most used tools when annotating images:
    </td>
    <td style="border: none; vertical-align: top;">
    <ol style="margin-top: 0; padding-top: 0;">
-      <li>Label eraser: A brush to remove all IDs from the current image.</li>
-      <li>Paint brush: A brush to paint the selected ID on the current image.</li>
-      <li>Fill bucket: Replaces the clicked ID and all adjacent pixels with the selected ID.</li>
-      <li>Pick mode: Selects the clicked ID.</li>
-      <li>Label selector: Allows you to manually set the painting ID (displays the paint color)</li>
-      <li>Brush size: Modifies the brush size.</li>
+      <li><b>Label eraser:</b> A brush to remove all IDs from the current image.</li>
+      <li><b>Paint brush:</b> A brush to paint the selected ID on the current image.</li>
+      <li><b>Fill bucket:</b> Replaces the clicked ID and all adjacent pixels with the selected ID.</li>
+      <li><b>Pick mode:</b> Selects the clicked ID.</li>
+      <li><b>Label selector:</b> Allows you to manually set the painting ID (displays the paint color)</li>
+      <li><b>Brush size:</b> Modifies the brush size.</li>
    </ol>
    </td>
 </tr>
 </table>
+
+---
 
 ### Navigation between frames
 
@@ -111,6 +113,8 @@ You can use the frame slider at the bottom of the GUI to navigate between frames
 **1 - Frame slider**: Allows navigation between different images in the series. You can also click the arrows or use the left and right arrows on your keyboard.
 
 **2 - Pointer information**: Shows your pointer coordinates in the format [Frame Height Width] (height and width in pixels). The last digit (outside of the brackets) corresponds to the label you are currently pointing at (if none, the mask is not selected in the layer list).
+
+---
 
 ### Creating Ground Truth Masks
 
@@ -145,9 +149,11 @@ We can therefore be certain that two cells exist starting from frame 80. Similar
    <p><em>Cell 3 appearance - starting from frame 163</em></p>
 </div>
 
+---
+
 #### Step 2: Identifying model errors and corrections
 
-**Common model inconsistencies include:**
+Common model inconsistencies include:
 - **ID switching:** Changes cell IDs from one image to another (tracking errors)
 - **Cell merging:** Groups multiple cells into one across some or all images
 - **Missing cells:** Fails to detect existing cells
@@ -156,7 +162,7 @@ We can therefore be certain that two cells exist starting from frame 80. Similar
 
 ⚠️ **Warning:** There are cases where the model predicts a single cell across all frames when multiple cells actually exist. It's important to detect this knowing about filopodia orientation.
 
-**Example of errors:**
+Example of errors:
 
 <div align="left">
    <img src="./content/error-example.gif" width="600">
@@ -164,11 +170,13 @@ We can therefore be certain that two cells exist starting from frame 80. Similar
 </div>
 In this example, the base prediction has many ID changes, loses cell tracking, and sometimes merges cells 1 and 2.
 
+---
+
 #### Step 3: Preliminary correction workflow
 
 It is essential to perform preliminary work to assign a unique ID to each cell throughout the time series.
 
-**Correction procedure:**
+Correction procedure:
 1. **Select the most frequent ID** for each cell by observing which ID appears most often for that specific cell across frames.
 2. **Navigate frame by frame** starting from the beginning and replace incorrect predictions using the **Fill bucket** tool.
 3. **Skip frames without predictions** - ignore these frames as you will rework this part later during detailed annotation.
