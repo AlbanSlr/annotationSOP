@@ -1,3 +1,7 @@
+# Platelets Segmentation and Tracking 🔬
+
+# Images Annotation ✍️
+
 ## 1. Installation 🔧
 
 To annotate images, we will use **Napari**, an interactive viewer for multi-dimensional images in Python. Follow the steps below to install Napari locally.
@@ -175,3 +179,108 @@ Correction procedure:
 By reviewing all images systematically, we can eliminate the model's gross errors and fill in the gaps during the second step of detailed annotation.
 
 ⚠️ **Important:** Each cell must have a different unique ID. When manually choosing an ID, ensure it's not already used by another cell.
+
+#### Step 4: Detailed Annotation
+
+This is the most demanding phase requiring extreme precision. Focus on capturing fine details, especially accurate contours and filopodia. This step involves refining the preliminary masks to achieve pixel-perfect accuracy.
+
+##### Essential Annotation Rules
+
+**🎯 Filopodia Direction Rule**
+- Filopodia always point toward their parent cell's center
+- Use this to resolve ambiguous cases about cell count or filopodia ownership
+- Filopodia have the same thickness within a single platelet
+
+**🔒 Spatial Priority Rule**
+- When cells visually overlap: the cell that appeared first maintains spatial priority
+- Maintain consistent priority throughout the time series
+
+**📏 Contour Precision Rule**
+- Cell boundaries should follow the actual cell membrane as closely as possible
+- Include all visible cell protrusions
+- Exclude background noise and imaging artifacts
+
+
+##### Filopodia Direction Rule Application
+
+The following example demonstrates the **Filopodia Direction Rule** for determining cell count based on filopodia orientation.
+
+**🤔 Initial Assessment Challenge:**
+How many cells do you count in this image?
+
+<div align="left">
+<img src="./content/cell-filopodia-img.png" width="400">
+<p><em>Static image - appears to show multiple separate structures</em></p>
+</div>
+
+**⏱️ Temporal Analysis:**
+The initial impression might suggest 3 separate cells, but temporal analysis reveals the true structure:
+
+<div align="left">
+<img src="./content/cell-filopodia.gif" width="400">
+<p><em>Time sequence showing filopodia dynamics and direction</em></p>
+</div>
+
+**🔍 Key Observation:** When observing the temporal sequence, filopodia consistently point toward the center of a single cell. This directional pattern is the definitive indicator for cell counting and ownership assignment.
+
+**✅ Correct Annotation:**
+Based on filopodia direction analysis, the expected mask for the above image is:
+
+<div align="left">
+<img src="./content/cell-filopodia-mask.png" width="400">
+<p><em>✅ Single cell mask based on filopodia direction rule</em></p>
+</div>
+
+<br>
+
+##### Spatial Priority Rule Application
+
+The following example demonstrates the **Spatial Priority Rule** when two cells overlap. In this sequence, the left cell appears before the right cell.
+
+<div align="left">
+   <img src="./content/cell-overlap.gif" width="600">
+   <p><em>Cell overlap sequence showing temporal appearance order</em></p>
+</div>
+
+**Analysis:** The left cell is present first, then the right cell appears and creates an overlapping region. 
+
+**Correct vs. Incorrect Annotation:**
+
+<div style="display: flex; gap: 20px;">
+   <div align="left">
+      <img src="./content/cell-overlap-gt.png" width="200">
+      <p><em>✅ <strong>CORRECT</strong><br/>First cell has priority</em></p>
+   </div>
+   <div align="left">
+      <img src="./content/cell-overlap-img.png" width="200">
+      <p><em>🔬 <strong>ORIGINAL</strong><br/>Raw microscopy image</em></p>
+   </div>
+   <div align="left">
+      <img src="./content/cell-overlap-wrong.png" width="200">
+      <p><em>❌ <strong>INCORRECT</strong><br/>Priority rule violated</em></p>
+   </div>
+</div>
+
+**Technical Details:**
+- **Correct annotation:** The first cell's mask extends into the overlap region, maintaining spatial continuity
+- **Incorrect annotation:** Fails to apply temporal priority, creating inconsistent segmentation boundaries
+
+<br>
+
+##### 🎯 Final Annotation Guidelines
+
+To complete the annotation of an image series, you must systematically process all cells across all frames to obtain a detailed, accurate mask. This comprehensive approach ensures temporal consistency and biological accuracy.
+
+**🔄 Complete Workflow Summary:**
+1. **Frame-by-frame review** - Examine every frame in the sequence
+2. **Cell tracking** - Maintain consistent IDs for each cell throughout the time series
+3. **Detail refinement** - Apply precision annotation to capture fine cellular structures
+4. **Quality validation** - Verify annotation consistency across temporal sequences
+
+**💡 Critical Tips for Success:**
+- **Early detection matters** - Pay special attention to cells when they first appear, even if they're only a few pixels
+- **No cell too small** - Annotate emerging cells immediately upon appearance to maintain tracking continuity
+- **Temporal consistency** - Ensure smooth transitions in cell shape and position between consecutive frames
+- **Precision over speed** - Take time to accurately capture cellular boundaries and filopodia
+
+**🎯 Remember:** High-quality ground truth annotations are the foundation of successful deep learning models. Your meticulous attention to detail directly impacts model performance and biological insights.
